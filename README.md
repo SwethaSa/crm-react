@@ -1,4 +1,4 @@
-#CRM APP 
+**#CRM APP** 
 
 This is a CRM App with API creation, Authentication, Authorization flows and all the datas we manipulate here will be eventually updated 
 in the Database as well
