@@ -45,7 +45,7 @@ function Login() {
       .post("https://crm-node-delta.vercel.app/users/login", { email, password })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        window.open("/https://chic-boba-f50bfd.netlify.app/dashboard");
+        window.open("https://chic-boba-f50bfd.netlify.app/dashboard");
       })
       .catch((err) => {
         if (err.response.data.msg) {
