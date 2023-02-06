@@ -1,3 +1,4 @@
+import React from "react";
 import SignUpForm from "./componenets/SignUp";
 import Login from "./componenets/Login";
 import ForgotPassword from "./componenets/ForgotPassword";
