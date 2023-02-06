@@ -75,7 +75,7 @@ const SignUpForm = () => {
           type: userType,
         })
         .then((res) => {
-          location.href = "/login";
+          window.location.href = "/login";
         });
       console.log(response);
       setEmail("");

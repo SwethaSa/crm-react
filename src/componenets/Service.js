@@ -20,7 +20,11 @@ import {
   InputLabel,
   FormControl,
 } from "@material-ui/core";
-import { Add as AddIcon, Delete as DeleteIcon } from "@material-ui/icons";
+import {
+  Add as AddIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,12 +44,13 @@ const Services = () => {
   const classes = useStyles();
   const [services, setServices] = useState([]);
   const [open, setOpen] = useState(false);
-  const [isCreateservice, setIsCreateservice] = useState(true);
+  const [isCreateService, setIsCreateService] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+  const [editService, setEditService] = useState({});
 
   useEffect(() => {
     fetch("https://crm-node-delta.vercel.app/service-request")
@@ -55,7 +60,7 @@ const Services = () => {
   }, []);
 
   const handleCreateService = () => {
-    setIsCreateservice(true);
+    setIsCreateService(true);
     setOpen(true);
     setName("");
     setEmail("");
@@ -70,13 +75,15 @@ const Services = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!name || !email || !phone || !description || !status) {
+    if (!name || !email || !phone || !description  || !status) {
       alert("All fields are mandatory!");
       return;
     }
-    const requestMethod = "POST";
-
-    fetch("http://localhost:100/service-request", {
+    const requestMethod = isCreateService ? "POST" : "PUT";
+    const api = isCreateService
+      ? "https://crm-node-delta.vercel.app/service-request"
+      : `https://crm-node-delta.vercel.app/service-request/${editService.email}`;
+    fetch(api, {
       method: requestMethod,
       headers: {
         "Content-Type": "application/json",
@@ -91,9 +98,19 @@ const Services = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (isCreateservice) {
+        if (isCreateService) {
           setServices([...services, data]);
-          alert("service created successfully!");
+          alert("Service created successfully!");
+          window.location.reload();
+        } else {
+          const updatedServices = services.map((service) => {
+            if (service.email === editService.email) {
+              return data;
+            }
+            return service;
+          });
+          setServices(updatedServices);
+          alert("Service updated successfully!");
           window.location.reload();
         }
         setOpen(false);
@@ -101,17 +118,26 @@ const Services = () => {
       .catch((error) => console.error(error));
   };
 
+  const handleEdit = (service) => {
+    setIsCreateService(false);
+    setOpen(true);
+    setName(service.name);
+    setEmail(service.email);
+    setPhone(service.phone);
+    setDescription(service.description);
+    setStatus(service.status);
+    setEditService(service);
+  };
+
   const handleDelete = (email) => {
-    fetch(`http://localhost:100/service-request/${email}`, {
+    fetch(`https://crm-node-delta.vercel.app/service-request/${email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedservices = services.filter(
-          (service) => service.email !== email
-        );
-        setServices(updatedservices);
-        alert("service deleted successfully!");
+        const updatedServices = services.filter((service) => service.email !== email);
+        setServices(updatedServices);
+        alert("Service deleted successfully!");
       })
       .catch((error) => console.error(error));
   };
@@ -121,7 +147,7 @@ const Services = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
-            Service Management
+            service Management
           </Typography>
 
           <div className={classes.navLinks}>
@@ -129,20 +155,17 @@ const Services = () => {
               <Typography variant="h6">Dashboard</Typography>
             </Button>
             <Button component={Link} to="/leads">
-              <Typography variant="h6">leads</Typography>
+              <Typography variant="h6">Leads</Typography>
             </Button>
             <Button component={Link} to="/contacts">
               <Typography variant="h6">Contacts</Typography>
             </Button>
+            
           </div>
         </Toolbar>
       </AppBar>{" "}
       <br></br>
-      <Button
-        color="secondary"
-        variant="contained"
-        onClick={handleCreateService}
-      >
+      <Button color="secondary" variant="contained" onClick={handleCreateService}>
         <AddIcon />
         Create service
       </Button>
@@ -169,13 +192,13 @@ const Services = () => {
               <b>Phone</b>
             </TableCell>
             <TableCell>
-              <b>Description</b>
+              <b>description</b>
             </TableCell>
             <TableCell>
               <b>Status</b>
             </TableCell>
             <TableCell>
-              <b>Delete</b>
+              <b>Actions</b>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -188,6 +211,9 @@ const Services = () => {
               <TableCell>{service.description}</TableCell>
               <TableCell>{service.status}</TableCell>
               <TableCell>
+                <IconButton onClick={() => handleEdit(service)}>
+                  <EditIcon />
+                </IconButton>
                 <IconButton onClick={() => handleDelete(service.email)}>
                   <DeleteIcon />
                 </IconButton>
@@ -217,12 +243,11 @@ const Services = () => {
             fullWidth
           />
           <TextField
-            label="Description"
+            label="description"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             fullWidth
           />
-
           <FormControl className={classes.formControl}>
             <InputLabel id="status-label">Status</InputLabel>
             <Select

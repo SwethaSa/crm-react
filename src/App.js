@@ -12,7 +12,7 @@ import { Route, Routes } from "react-router-dom";
 export default function App() {
   return (
     <div>
-      <Routes>
+      <Routes >
         <Route path="/" element={<SignUpForm />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
