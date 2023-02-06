@@ -50,7 +50,7 @@ const ContactTable = () => {
   const [editcontact, setEditcontact] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:100/contacts")
+    fetch("https://crm-node-delta.vercel.app/contacts")
       .then((res) => res.json())
       .then((data) => setContacts(data))
       .catch((error) => console.error(error));
@@ -79,8 +79,8 @@ const ContactTable = () => {
     }
     const requestMethod = isCreatecontact ? "POST" : "PUT";
     const api = isCreatecontact
-      ? "http://localhost:100/contacts"
-      : `http://localhost:100/contacts/${editcontact.email}`;
+      ? "https://crm-node-delta.vercel.app/contacts"
+      : `https://crm-node-delta.vercel.app/contacts/${editcontact.email}`;
     fetch(api, {
       method: requestMethod,
       headers: {
@@ -130,7 +130,7 @@ const ContactTable = () => {
   };
 
   const handleDelete = (email) => {
-    fetch(`http://localhost:100/contacts/${email}`, {
+    fetch(`https://crm-node-delta.vercel.app/contacts/${email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

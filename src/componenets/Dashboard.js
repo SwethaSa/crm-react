@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:100/api/counts`);
+      const response = await fetch(`https://crm-node-delta.vercel.app/api/counts`);
       const data = await response.json();
       setLeadCount(data.leadCount);
       setContactCount(data.contactCount);

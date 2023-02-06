@@ -67,7 +67,7 @@ const SignUpForm = () => {
     }
     try {
       const response = await axios
-        .post("http://localhost:100/users/register", {
+        .post("https://crm-node-delta.vercel.app/users/register", {
           email,
           password,
           firstName,

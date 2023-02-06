@@ -42,7 +42,7 @@ function Login() {
       return;
     }
     axios
-      .post("http://localhost:100/users/login", { email, password })
+      .post("https://crm-node-delta.vercel.app/users/login", { email, password })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         window.location.href = "/dashboard";

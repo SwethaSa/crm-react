@@ -54,7 +54,7 @@ const Leads = () => {
   const [editLead, setEditLead] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:100/leads")
+    fetch("https://crm-node-delta.vercel.app/leads")
       .then((res) => res.json())
       .then((data) => setLeads(data))
       .catch((error) => console.error(error));
@@ -83,8 +83,8 @@ const Leads = () => {
     }
     const requestMethod = isCreateLead ? "POST" : "PUT";
     const api = isCreateLead
-      ? "http://localhost:100/leads"
-      : `http://localhost:100/leads/${editLead.email}`;
+      ? "https://crm-node-delta.vercel.app/leads"
+      : `https://crm-node-delta.vercel.app/leads/${editLead.email}`;
     fetch(api, {
       method: requestMethod,
       headers: {
@@ -134,7 +134,7 @@ const Leads = () => {
   };
 
   const handleDelete = (email) => {
-    fetch(`http://localhost:100/leads/${email}`, {
+    fetch(`https://crm-node-delta.vercel.app/leads/${email}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

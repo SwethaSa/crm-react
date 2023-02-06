@@ -48,7 +48,7 @@ const Services = () => {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:100/service-request")
+    fetch("https://crm-node-delta.vercel.app/service-request")
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((error) => console.error(error));

@@ -46,7 +46,7 @@ const ResetPassword = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:100/reset-password/${token}`,
+        `https://crm-node-delta.vercel.app/reset-password/${token}`,
 
         {
           method: "POST",
