@@ -1,3 +1,12 @@
+#CRM APP 
+
+This is a CRM App with API creation, Authentication, Authorization flows and all the datas we manipulate here will be eventually updated 
+in the Database as well
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
