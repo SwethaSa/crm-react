@@ -41,7 +41,7 @@ const ForgotPassword = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:100/forgot-password",
+        "https://crm-node-delta.vercel.app/forgot-password",
         { email }
       );
       setEmail("");
