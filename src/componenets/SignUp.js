@@ -55,24 +55,22 @@ const SignUpForm = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
   const [error, setError] = useState(null);
   const classes = useStyles();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!email || !password || !firstName || !lastName || !userType) {
+    if (!email || !password || !firstName || !lastName ) {
       alert("OOPS!!👀All the fields are required");
       return;
     }
     try {
       const response = await axios
-        .post("https://crm-node-delta.vercel.app/users/register", {
+        .post("https://password-reset-backend-zeta.vercel.app/users/register", {
           email,
           password,
           firstName,
           lastName,
-          type: userType,
         })
         .then((res) => {
           window.location.href = "/login";
@@ -82,7 +80,6 @@ const SignUpForm = () => {
       setPassword("");
       setFirstName("");
       setLastName("");
-      setUserType("");
       if (response) {
         <Alert variant="filled" severity="success">
           alert(User Created Successfully!);
@@ -184,27 +181,9 @@ const SignUpForm = () => {
               variant="outlined"
               fullWidth
             />
-          </div>
+         
 
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Avatar className={classes.avatar}>
-              <FaceIcon />
-            </Avatar>
-
-            <TextField
-              required
-              margin="normal"
-              label="User Type"
-              name="usertype"
-              autoComplete="usertype"
-              autoFocus
-              type="text"
-              value={userType}
-              onChange={(event) => setUserType(event.target.value)}
-              className={classes.textField}
-              variant="outlined"
-              fullWidth
-            />
+            
           </div>
           <Button
             type="submit"
