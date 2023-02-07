@@ -42,7 +42,7 @@ function Login() {
       return;
     }
     axios
-      .post("https://crm-node-delta.vercel.app/users/login", { email, password })
+      .post("https://password-reset-backend-zeta.vercel.app/users/login", { email, password })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         window.open("/dashboard");
