@@ -147,7 +147,7 @@ const Services = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
-            service Management
+            Service Management
           </Typography>
 
           <div className={classes.navLinks}>
